@@ -68,7 +68,7 @@ var checkHtmlFile = function(htmlfile, checksfile) {
 };
 var checkUrl = function(urlContentString,checksfile){
   
-$ = cheerio.load(urlContentString);
+    $ = cheerio.load(urlContentString);
     var checks = loadChecks(checksfile).sort();
     var out = {};
     for(var ii in checks) {
@@ -86,6 +86,9 @@ var clone = function(fn) {
 var showResult = function(checkJson){
     var outJson = JSON.stringify(checkJson, null, 4);
     console.log(outJson);
+    var outfile="salidaJSON.txt";
+    fs.writeFileSync(outfile,outJson);
+    return;
 }
 
 
@@ -101,7 +104,7 @@ if(require.main == module) {
 	    var checkJson = checkHtmlFile(program.file, program.checks);
 	   showResult(checkJson);
 	}else{
-	    console.log("antes url content");    
+	        
 	      rest.get(program.url).on('complete',function(result){
 	   
 		if (result instanceof Error) {
@@ -116,7 +119,7 @@ if(require.main == module) {
 		
 	}
    // var outJson = JSON.stringify(checkJson, null, 4);
-   // console.log(outJson);
+  // console.log(outJson);
 } else {
     exports.checkHtmlFile = checkHtmlFile;
 }
